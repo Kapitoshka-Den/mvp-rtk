@@ -1,28 +1,58 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { NavLink, Route, Router, Routes } from "react-router-dom";
+import { NavLink, Route, Router, Routes, useNavigate } from "react-router-dom";
 import AudienceList from "./Pages/AudienceList";
 import CreateEquip from "./Pages/CreateEquip";
+import Authorize from "./Pages/Authorize";
+import Registration from "./Pages/Registration";
+import EquipmentList from "./Pages/EquipmentList";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
+import { tokensDelete } from "./Services/LocalStorageService";
+import Equipment from "./Pages/Equipment";
 
-const App =() =>{
+const App = () => {
+const navigator = useNavigate()
+
   return (
-      <div className="App">
-      <nav style={{height: '10%'}}>
+    <div className="App">
+      <nav style={{ height: "10%" }} className="d-flex flex-row">
         <ul className="padding-inline-start">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/audienceList">Audicence</NavLink>
-          <NavLink to="/createEquip">Equipment</NavLink>
+          {window.localStorage.getItem("acces token") ? (
+            <div>
+              <NavLink className="m-1" to="/audienceList">
+                Audiences
+              </NavLink>
+              <NavLink className="m-1" to="/">
+                Login
+              </NavLink>
+              <Button onClick={()=>{
+                tokensDelete()
+                navigator("/")
+                }}>Logout</Button>
+            </div>
+          ) : (
+            <NavLink className="m-1" to="/">
+              Login
+            </NavLink>
+          )}
         </ul>
       </nav>
       <Routes>
-        <Route path="/"/>
-        <Route path="/audienceList" element={<AudienceList/>}/>
-        <Route path="/createEquip" element={<CreateEquip/>}/>
-        
+        <Route
+          path="/equipInAudience/:audienceId"
+          element={<EquipmentList />}
+        />
+        <Route path="/" element={<Authorize />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/audienceList" element={<AudienceList />} />
+        <Route path="/createEquip" element={<CreateEquip props="test"/>} />
+        <Route path="/Login" element={<Authorize />} />
+        <Route path="/equipment/:equipmentId" element={<Equipment />} />
       </Routes>
-      </div>
+    </div>
   );
-}
+};
 
 export default App;
