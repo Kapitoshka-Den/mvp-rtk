@@ -36,7 +36,7 @@ const EquipmentList = () => {
       });
   }, []);
   return (
-    <div>
+    <div className="d-flex flex-column">
       <h1>{"Оборудование аудитории " + numberAuid}</h1>
 
       {equipments.map((elem) => (

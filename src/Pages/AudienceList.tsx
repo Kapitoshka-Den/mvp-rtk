@@ -27,7 +27,7 @@ const AudienceList = () => {
       });
   }, []);
   return (
-    <div>
+    <div className="d-flex flex-column">
       <h1 style={{ textAlign: "center" }}>Аудитории</h1>
       {audiences.map((elem) => (
         <NavLink to={"/equipInAudience/"+elem.id} key={elem.id}>каб. {elem.audienceNumber}</NavLink>
