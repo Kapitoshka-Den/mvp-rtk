@@ -50,7 +50,7 @@ const navigator = useNavigate()
         <Route path="/audienceList" element={<AudienceList />} />
         <Route path="/createEquip" element={<CreateEquip props="test"/>} />
         <Route path="/Login" element={<Authorize />} />
-        <Route path="/equipment/:equipmentId" element={<Equipment />} />
+        <Route path="/equipment/:audiencetId" element={<Equipment />} />
         <Route path="/audienceCreate" element={<AudienceCreate/>}/>
       </Routes>
     </div>

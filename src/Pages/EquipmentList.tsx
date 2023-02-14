@@ -13,7 +13,7 @@ const EquipmentList = () => {
 
   useEffect(() => {
     axios
-      .get("http://banaworld.ru:5003/Equipment/Api/Equipment?skip=0&take=20", {
+      .get("http://banaworld.ru:5003/Equipment/Api/Equipment?skip=0&take=20&audienceId="+params.audienceId, {
         headers: {
           Authorization:
             "Bearer " + window.localStorage.getItem("refresh token"),
