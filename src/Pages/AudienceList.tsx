@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Alert } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import GetAudience from "../Services/Audience";
+import { baseUrlForAudience } from "../Services/BaseUrl";
 
 type AudienceType = {
   id: string;
@@ -18,7 +17,7 @@ const AudienceList = () => {
 
   useEffect(() => {
     axios
-      .get("http://banaworld.ru:5003/Equipment/Api/Audience?skip=0&take=100", {
+      .get(baseUrlForAudience+"?skip=0&take=100", {
         headers: {
           Authorization:
             "Bearer " + window.localStorage.getItem("refresh token"),

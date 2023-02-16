@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, FloatingLabel, Form, FormGroup } from "react-bootstrap";
+import { baseUrlForAudience } from "../Services/BaseUrl";
 
 const AudienceCreate = () => {
   const [number, setNumber] = useState("");
@@ -9,7 +10,7 @@ const AudienceCreate = () => {
 
   function onClick() {
     axios.post(
-      "http://banaworld.ru:5003/Equipment/Api/Audience",
+      baseUrlForAudience,
       {
         audienceNumber:number,
         purchaseDate:date,

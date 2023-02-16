@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { baseUrlForEquipment } from "../Services/BaseUrl";
 import { EquipmentClass } from "../types/EquipmentType";
 
 const EquipmentList = () => {
@@ -13,7 +14,7 @@ const EquipmentList = () => {
 
   useEffect(() => {
     axios
-      .get("http://banaworld.ru:5003/Equipment/Api/Equipment?skip=0&take=20&audienceId="+params.audienceId, {
+      .get(baseUrlForEquipment+"?skip=0&take=20&audienceId="+params.audienceId, {
         headers: {
           Authorization:
             "Bearer " + window.localStorage.getItem("refresh token"),
@@ -46,7 +47,7 @@ const EquipmentList = () => {
       ))}
       <div className="dropup position-absolute bottom-0 end-0 rounded-circle m-5">
         <button
-          onClick={()=>navigator("/createEquip",{state:{audienceId:params.audienceId}})}
+          onClick={()=>navigator("/createEquip",{state:{equipmentId:params.audienceId}})}
           type="button"
           className="btn btn-primary btn-lg  hide-toggle"
         >

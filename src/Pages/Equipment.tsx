@@ -11,10 +11,11 @@ const Equipment = () => {
   const params = useParams();
 
   useEffect(() => {
+    console.log(params  )
     axios
       .get(
-        "http://banaworld.ru:5003/Equipment/Api/Equipment/" +
-          params.equipmentId,
+        ("http://banaworld.ru:5003/Equipment/Api/Equipment/" +
+          params.audiencetId),
         {
           headers: {
             Authorization:
@@ -86,7 +87,8 @@ const Equipment = () => {
 
         <QRCode
           id="qrCode"
-          value={equip == null ? "" : equip.id}
+          value={equip == null ? "" : ("http://banaworld.ru:5003/Equipment/Api/Equipment/" +
+          params.audiencetId)}
           size={256}
           style={{ height: "auto", maxWidth: "100%", width: "100%" }}
           viewBox={`0 0 256 256`}

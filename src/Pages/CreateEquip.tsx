@@ -12,7 +12,7 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import QRCode from "react-qr-code";
 import { parsePath, useLocation, useParams } from "react-router-dom";
-import GetEquipTypes from "../Services/EquipType";
+import { baseUrlForEquipment } from "../Services/BaseUrl";
 import { EquipmentClass } from "../types/EquipmentType";
 import { EquipmentType } from "../types/EquipmetTypes";
 
@@ -33,7 +33,7 @@ const CreateEquip = (props: any) => {
     console.log(params.state.audienceId);
     axios
       .get(
-        "http://banaworld.ru:5003/Equipment/Api/EquipmentType?skip=0&take=100",
+        baseUrlForEquipment+"?skip=0&take=100",
         {
           headers: {
             Authorization:
