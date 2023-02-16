@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { baseUrlForEquipment } from "../Services/BaseUrl";
+import { baseUrlForAudience, baseUrlForEquipment } from "../Services/BaseUrl";
 import { EquipmentClass } from "../types/EquipmentType";
 
 const EquipmentList = () => {
@@ -13,6 +13,7 @@ const EquipmentList = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
+    console.log(params.audienceId)
     axios
       .get(baseUrlForEquipment+"?skip=0&take=20&audienceId="+params.audienceId, {
         headers: {
@@ -24,7 +25,7 @@ const EquipmentList = () => {
       .catch((error) => console.log(error));
     axios
       .get(
-        "http://banaworld.ru:5003/Equipment/Api/Audience/" + params.audienceId,
+        baseUrlForAudience + params.audienceId,
         {
           headers: {
             Authorization:

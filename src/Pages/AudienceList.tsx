@@ -17,7 +17,7 @@ const AudienceList = () => {
 
   useEffect(() => {
     axios
-      .get(baseUrlForAudience+"?skip=0&take=100", {
+      .get((baseUrlForAudience+"?skip=0&take=100"), {
         headers: {
           Authorization:
             "Bearer " + window.localStorage.getItem("refresh token"),

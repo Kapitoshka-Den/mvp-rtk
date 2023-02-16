@@ -1,52 +1,39 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { EquipmentClass } from "../types/EquipmentType";
 import QRCode from "react-qr-code";
+import { baseUrlForEquipment } from "../Services/BaseUrl";
+import { QRCodeCanvas } from "qrcode.react";
 
 const Equipment = () => {
-  const [equip, setEquip] = useState<EquipmentClass>();
-
+  const [equip, setEquip] = useState<EquipmentClass | null>(null);
+  const qrRef = useRef<HTMLDivElement>(null)
   const params = useParams();
 
   useEffect(() => {
-    console.log(params  )
     axios
-      .get(
-        ("http://banaworld.ru:5003/Equipment/Api/Equipment/" +
-          params.audiencetId),
-        {
-          headers: {
-            Authorization:
-              "Bearer " + window.localStorage.getItem("refresh token"),
-          },
-        }
-      )
+      .get(baseUrlForEquipment + params.audiencetId, {
+        headers: {
+          Authorization:
+            "Bearer " + window.localStorage.getItem("refresh token"),
+        },
+      })
       .then((response) => setEquip(response.data))
       .catch((error) => console.log(error));
   }, []);
 
   const dowloadQrCode = () => {
-    const canvasUrl = document.getElementById("qrCode") as HTMLCanvasElement;
-    const svgData = new XMLSerializer().serializeToString(canvasUrl);
-    
-    
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx!.drawImage(img, img.width, img.height);
-    
-    const pngFile = canvas.toDataURL("image/png");
-    const downloadLink = document.createElement("a");
-    downloadLink.download = equip!.title;
-    downloadLink.href = `${pngFile}`;
-    downloadLink.click();
-    };
-    img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
+      let canvas = qrRef.current!.querySelector("canvas");
+      console.log(qrRef.current)
+      let image = canvas!.toDataURL("image/png");
+      let anchor = document.createElement("a");
+      anchor.href = image;
+      anchor.download = equip?.title+".png";
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
   };
 
   return (
@@ -85,14 +72,20 @@ const Equipment = () => {
           />
         </FloatingLabel>
 
-        <QRCode
-          id="qrCode"
-          value={equip == null ? "" : ("http://banaworld.ru:5003/Equipment/Api/Equipment/" +
-          params.audiencetId)}
-          size={256}
-          style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-          viewBox={`0 0 256 256`}
-        ></QRCode>
+        <div ref={qrRef}>
+          <QRCodeCanvas
+            id="qrCode"
+            value={
+              equip == null
+                ? ""
+                : "http://banaworld.ru:5003/Equipment/Api/Equipment/" +
+                  params.audiencetId
+            }
+            level="H"
+            size={256}
+            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+          ></QRCodeCanvas>
+        </div>
         <div className="text-center">
           <Button
             type="button"

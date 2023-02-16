@@ -48,7 +48,7 @@ const CreateEquip = (props: any) => {
   function onClick() {
     axios
       .post(
-        "http://banaworld.ru:5003/Equipment/Api/Equipment",
+        baseUrlForEquipment,
         {
           title: title,
           description: direction,
