@@ -25,7 +25,7 @@ const EquipmentList = () => {
       .catch((error) => console.log(error));
     axios
       .get(
-        baseUrlForAudience + params.audienceId,
+        baseUrlForAudience +"/"+ params.audienceId,
         {
           headers: {
             Authorization:
