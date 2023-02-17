@@ -18,7 +18,7 @@ useEffect(()=>{
 
 
 
-function SignUp(email:string, login:string,password:string) {
+function SignUp() {
       axios.post('http://banaworld.ru:5003/Auth/api/Auth/SignIn',{
         email:userEmail,
         password:userPassword,
@@ -61,7 +61,8 @@ function SignUp(email:string, login:string,password:string) {
         <div className="text-center">
 
         <Button type="button" 
-            className="text-center">
+            className="text-center"
+            onClick={SignUp}>
             Submit
         </Button>
         </div>
