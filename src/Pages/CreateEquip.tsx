@@ -7,12 +7,19 @@ import {
   Form,
   Button,
   FloatingLabel,
+  ToastContainer,
+  ToastHeader,
+  ToastBody,
+  Toast,
 } from "react-bootstrap";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import QRCode from "react-qr-code";
 import { parsePath, useLocation, useParams } from "react-router-dom";
-import { baseUrlForEquipment, baseUrlForEquipmentType } from "../Services/BaseUrl";
+import {
+  baseUrlForEquipment,
+  baseUrlForEquipmentType,
+} from "../Services/BaseUrl";
 import { EquipmentClass } from "../types/EquipmentType";
 import { EquipmentType } from "../types/EquipmetTypes";
 
@@ -26,30 +33,28 @@ const CreateEquip = (props: any) => {
   const [responName, setresponName] = useState("");
   const [model, setModel] = useState("");
   const [file, setFile] = useState<any>();
+  const [showToast, setShowToast] = useState(false);
 
   const formData = new FormData();
 
   useEffect(() => {
     console.log(params.state.audienceId);
     axios
-      .get(
-        baseUrlForEquipmentType+"?skip=0&take=100",
-        {
-          headers: {
-            Authorization:
-              "Bearer " + window.localStorage.getItem("refresh token"),
-          },
-        }
-      )
+      .get(baseUrlForEquipmentType + "?skip=0&take=100", {
+        headers: {
+          Authorization:
+            "Bearer " + window.localStorage.getItem("refresh token"),
+        },
+      })
       .then((response) => {
-        setTypes(response.data)
-        setType(response.data[0].id)
+        setTypes(response.data);
+        setType(response.data[0].id);
       })
       .catch((error) => console.log(error));
   }, []);
 
   function onClick() {
-    console.log(params)
+    console.log(params);
     axios
       .post(
         baseUrlForEquipment,
@@ -69,26 +74,20 @@ const CreateEquip = (props: any) => {
         }
       )
       .then((response) => {
-        formData.append("File",file)
-        formData.append("EquipmentId",response.data)
-        console.log(response.data)
+        formData.append("File", file);
+        formData.append("EquipmentId", response.data);
         axios
-          .post(
-            "http://banaworld.ru:5003/Equipment/Api/Attach",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization:
-                  "Bearer " + window.localStorage.getItem("refresh token"),
-              },
-            }
-          )
-          .then()
+          .post("http://banaworld.ru:5003/Equipment/Api/Attach", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization:
+                "Bearer " + window.localStorage.getItem("refresh token"),
+            },
+          })
+          .then((response) => setShowToast(true))
           .catch((error) => {
             console.log(error);
           });
-          
       })
       .catch((error) => console.log(error));
   }
@@ -170,6 +169,21 @@ const CreateEquip = (props: any) => {
           </Button>
         </div>
       </Form>
+      <ToastContainer
+        position="top-center"
+        className="d-flex flex-column mb-3 align-items-center"
+      >
+        <Toast
+          bg="success"
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={2000}
+          autohide
+        >
+          <ToastHeader><strong className="me-auto">Информация</strong></ToastHeader>
+          <ToastBody>Запись была успешно добавлена</ToastBody>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 };

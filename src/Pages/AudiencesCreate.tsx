@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import { Button, FloatingLabel, Form, FormGroup } from "react-bootstrap";
+import { Button, FloatingLabel, Form, FormGroup, Toast, ToastBody, ToastContainer, ToastHeader } from "react-bootstrap";
 import { baseUrlForAudience } from "../Services/BaseUrl";
 
 const AudienceCreate = () => {
   const [number, setNumber] = useState("");
   const [date, setDate] = useState("");
   const [task, setTask] = useState("");
+  const [showToast,setShowToast] = useState(false)
 
   function onClick() {
     axios.post(
@@ -22,7 +23,7 @@ const AudienceCreate = () => {
             "Bearer " + window.localStorage.getItem("refresh token"),
         },
       }
-    ).then().catch(e=>console.log(e));
+    ).then((response)=>setShowToast(true)).catch(e=>console.log(e));
   }
 
   return (
@@ -62,6 +63,21 @@ const AudienceCreate = () => {
           </Button>
         </div>
       </Form>
+      <ToastContainer
+        position="top-center"
+        className="d-flex flex-column mb-3 align-items-center"
+      >
+        <Toast
+          bg="success"
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={2000}
+          autohide
+        >
+          <ToastHeader><strong className="me-auto">Информация</strong></ToastHeader>
+          <ToastBody>Запись была успешно добавлена</ToastBody>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 };

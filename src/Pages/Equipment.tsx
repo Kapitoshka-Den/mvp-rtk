@@ -14,7 +14,7 @@ const Equipment = () => {
 
   useEffect(() => {
     axios
-      .get(baseUrlForEquipment + params.audiencetId, {
+      .get(baseUrlForEquipment +"/"+ params.audiencetId, {
         headers: {
           Authorization:
             "Bearer " + window.localStorage.getItem("refresh token"),
