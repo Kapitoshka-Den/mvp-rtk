@@ -1,53 +1,76 @@
 import axios from "axios";
+import e from "express";
 import { useState } from "react";
-import { Button, FloatingLabel, Form, FormGroup, Toast, ToastBody, ToastContainer, ToastHeader } from "react-bootstrap";
+import {
+  Button,
+  FloatingLabel,
+  Form,
+  FormGroup,
+  Toast,
+  ToastBody,
+  ToastContainer,
+  ToastHeader,
+} from "react-bootstrap";
 import { baseUrlForAudience } from "../Services/BaseUrl";
 
 const AudienceCreate = () => {
-  const [number, setNumber] = useState("");
-  const [date, setDate] = useState("");
+  const [type, setType] = useState("audience");
+  const [name, setName] = useState("");
   const [task, setTask] = useState("");
-  const [showToast,setShowToast] = useState(false)
-
+  const [showToast, setShowToast] = useState(false);
   function onClick() {
-    axios.post(
-      baseUrlForAudience,
-      {
-        audienceNumber:number,
-        purchaseDate:date,
-        technicalTask:task
-      },
-      {
-        headers: {
-          Authorization:
-            "Bearer " + window.localStorage.getItem("refresh token"),
-        },
-      }
-    ).then((response)=>setShowToast(true)).catch(e=>console.log(e));
+    axios
+      .post(
+        baseUrlForAudience,
+        type == "audience"
+          ? {
+              name: name,
+              audience: {
+                technicalTask: task,
+              },
+            }
+          : {
+              name: name,
+              user: {
+                jobTitle: task,
+              },
+            },
+        {
+          headers: {
+            Authorization:
+              "Bearer " + window.localStorage.getItem("refresh token"),
+          },
+        }
+      )
+      .then((response) => setShowToast(true))
+      .catch((e) => console.log(e));
   }
+
+
 
   return (
     <div className="d-flex align-items-control justify-content-center">
       <Form>
         <FormGroup>
-          <FloatingLabel label="Номер аудитории">
+          <FloatingLabel label="Binds type" className="mb-3">
+            <Form.Select onChange={(e)=>setType(e.target.value)}>
+              <option selected={true} value={"user"}>User</option>
+              <option value={"audience"}>Audience</option>
+            </Form.Select>
+          </FloatingLabel>
+        </FormGroup>
+        <FormGroup>
+          <FloatingLabel label="Номер аудитории / Ваше имя">
             <Form.Control
               type="label"
               placeholder="Audiecne Number"
-              onChange={(e) => setNumber(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               className="mb-3"
             />
           </FloatingLabel>
         </FormGroup>
         <FormGroup>
-          <input
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
-            style={{ width: "280px" }}
-          />
-        </FormGroup>
-        <FormGroup>
-          <FloatingLabel label="Техническое задание">
+          <FloatingLabel label="Техническое задание / Ваша должность">
             <Form.Control
               as="textarea"
               placeholder="Tech task"
@@ -74,7 +97,9 @@ const AudienceCreate = () => {
           delay={2000}
           autohide
         >
-          <ToastHeader><strong className="me-auto">Информация</strong></ToastHeader>
+          <ToastHeader>
+            <strong className="me-auto">Информация</strong>
+          </ToastHeader>
           <ToastBody>Запись была успешно добавлена</ToastBody>
         </Toast>
       </ToastContainer>

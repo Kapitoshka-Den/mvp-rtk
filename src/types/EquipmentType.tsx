@@ -2,6 +2,7 @@ export type EquipmentClass = {
   id: string;
   title: string;
   description: string;
-  responsibleName: string;
   model: string;
+  purchaseDate:string;
+  binderId:string;
 };

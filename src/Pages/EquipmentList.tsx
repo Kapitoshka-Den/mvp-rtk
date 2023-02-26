@@ -33,9 +33,10 @@ const EquipmentList = () => {
   };
 
   const loadEquipList = () => {
+    console.log(params.audienceId)
     axios
       .get(
-        baseUrlForEquipment + "?skip=0&take=20&audienceId=" + params.audienceId,
+        baseUrlForEquipment + "?binderId=" + params.audienceId,
         {
           headers: {
             Authorization:
@@ -67,7 +68,7 @@ const EquipmentList = () => {
       {equipments.map((elem) => (
         <div className="d-flex justify-content-between m-3">
           <NavLink to={"/equipment/" + elem.id} key={elem.id}>
-            {elem.title} - {elem.responsibleName}
+            {elem.title} - {elem.model}
           </NavLink>
           <Button variant="outline-danger" onClick={() => onDelClick(elem.id)}>
             Delete

@@ -30,7 +30,7 @@ const CreateEquip = (props: any) => {
   const [type, setType] = useState("");
   const [title, setTitle] = useState("");
   const [direction, setDirection] = useState("");
-  const [responName, setresponName] = useState("");
+  const [purchaseDate, setPurchaseDate] = useState("");
   const [model, setModel] = useState("");
   const [file, setFile] = useState<any>();
   const [showToast, setShowToast] = useState(false);
@@ -61,10 +61,10 @@ const CreateEquip = (props: any) => {
         {
           title: title,
           description: direction,
-          responsibleName: responName,
+          purchaseDate: purchaseDate,
           model: model,
           typeId: type,
-          audienceId: params.state.equipmentId,
+          binderId: params.state.equipmentId,
         },
         {
           headers: {
@@ -74,6 +74,7 @@ const CreateEquip = (props: any) => {
         }
       )
       .then((response) => {
+        console.log(response.data);
         formData.append("File", file);
         formData.append("EquipmentId", response.data);
         axios
@@ -132,14 +133,12 @@ const CreateEquip = (props: any) => {
             />
           </FloatingLabel>
         </FormGroup>
-        <FormGroup>
-          <FloatingLabel label="Responsible name" className="mb-3">
-            <Form.Control
-              type="label"
-              placeholder="Responsible Name"
-              onChange={(e) => setresponName(e.target.value)}
-            />
-          </FloatingLabel>
+        <FormGroup className="mb-3">
+          <input
+            type="date"
+            onChange={(e) => setPurchaseDate(e.target.value)}
+            style={{ width: "280px" }}
+          />
         </FormGroup>
         <FormGroup>
           <FloatingLabel label="Model" className="mb-3">

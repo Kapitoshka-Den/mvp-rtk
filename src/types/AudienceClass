@@ -1,0 +1,13 @@
+export type Bind ={
+  name: string;
+  user: User;
+  audience: Audience;
+}
+
+export type Audience ={
+  technicalTask: string;
+}
+
+export type User ={
+  jobTitle: string;
+}

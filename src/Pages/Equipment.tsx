@@ -55,10 +55,10 @@ const Equipment = () => {
             readOnly
           />
         </FloatingLabel>
-        <FloatingLabel label="Responsible name">
+        <FloatingLabel label="Purchase Date">
           <Form.Control
             type="label"
-            value={equip?.responsibleName}
+            value={equip?.purchaseDate}
             className="mb-3"
             readOnly
           />
