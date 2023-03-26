@@ -12,6 +12,7 @@ import { Button } from "react-bootstrap";
 import { tokensDelete } from "./Services/LocalStorageService";
 import Equipment from "./Pages/Equipment";
 import AudienceCreate from "./Pages/AudiencesCreate";
+import AudienceInfo from "./Pages/AudienceInfo";
 
 const App = () => {
 const navigator = useNavigate()
@@ -52,6 +53,7 @@ const navigator = useNavigate()
         <Route path="/Login" element={<Authorize />} />
         <Route path="/equipment/:audiencetId" element={<Equipment />} />
         <Route path="/audienceCreate" element={<AudienceCreate/>}/>
+        <Route path="/audienceInfo/:audienceId" element = {<AudienceInfo/>}/>
       </Routes>
     </div>
   );
