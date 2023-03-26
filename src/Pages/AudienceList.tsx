@@ -3,19 +3,8 @@ import { MouseEvent, useEffect, useState } from "react";
 import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { baseUrlForAudience } from "../Services/BaseUrl";
+import { BindType } from "../types/BindType";
 
-type BindType = {
-  id: string;
-  name: string;
-  purchaseDate: string;
-  technicalTask: string;
-  user:{
-    jobTitle:string
-  }
-  audience:{
-    technicalTask:string
-  }
-};
 
 const AudienceList = () => {
   const navigator = useNavigate();
@@ -90,11 +79,18 @@ const AudienceList = () => {
             key={elem.id}
             className="d-flex align-items-center"
           >
-            каб. {elem.name}
+            {elem.name}
           </NavLink>
+          <div >
+          <Button variant="outline-succes">
+            <NavLink to={"/audienceInfo/" + elem.id} >
+              Info
+            </NavLink>
+          </Button>
           <Button variant="outline-danger" onClick={() => onDelClick(elem.id)}>
             Delete
           </Button>
+          </div>
         </div>
       ))}
 
