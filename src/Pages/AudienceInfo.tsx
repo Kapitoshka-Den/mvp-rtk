@@ -12,14 +12,18 @@ const AudienceInfo = () =>{
     const qrRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
+      console.log(params)
         axios
-          .get(baseUrlForAudience +"/"+ params.audiencetId, {
+          .get(baseUrlForAudience +"/"+ params.audienceId
+          , {
             headers: {
               Authorization:
                 "Bearer " + window.localStorage.getItem("refresh token"),
             },
           })
-          .then((response) => setAudience(response.data))
+          .then((response) => {
+            console.log(response.data)
+            setAudience(response.data)})
           .catch((error) => console.log(error));
       }, []);
     
@@ -49,27 +53,13 @@ const AudienceInfo = () =>{
         <FloatingLabel label="Description">
           <Form.Control
             as="textarea"
-            value={audience?.technicalTask}
-            className="mb-3"
-            readOnly
-          />
-        </FloatingLabel>
-        <FloatingLabel label="Purchase Date">
-          <Form.Control
-            type="label"
-            value={audience?.purchaseDate}
-            className="mb-3"
-            readOnly
-          />
-        </FloatingLabel>
-        <FloatingLabel label="Model">
-          <Form.Control
-            type="label"
             value={audience?.user != null? audience?.user.jobTitle:audience?.audience.technicalTask}
             className="mb-3"
             readOnly
           />
         </FloatingLabel>
+        
+
 
         <div ref={qrRef}>
           <QRCodeCanvas
@@ -78,7 +68,7 @@ const AudienceInfo = () =>{
               audience == null
                 ? ""
                 : "http://banaworld.ru:5003/Equipment/Api/Equipment/" +
-                  params.audiencetId
+                  params.audienceId
             }
             level="H"
             size={256}

@@ -73,11 +73,12 @@ const AudienceList = () => {
       </Form.Select>
       {
       audiences.map((elem) => (
-        <div className="d-flex justify-content-between m-3 ">
+        <div className="border-bottom border-primary d-flex justify-content-between m-3 ">
           <NavLink
             to={"/equipInAudience/" + elem.id}
             key={elem.id}
             className="d-flex align-items-center"
+            style={{textDecoration:'none'}}
           >
             {elem.name}
           </NavLink>
@@ -98,6 +99,7 @@ const AudienceList = () => {
         <button
           onClick={() => navigator("/audienceCreate")}
           type="button"
+          style={{ position:'fixed', right:'10px', bottom:'10px'}}
           className="btn btn-primary btn-lg  hide-toggle"
         >
           +

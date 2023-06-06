@@ -14,7 +14,7 @@ import {
 import { baseUrlForAudience } from "../Services/BaseUrl";
 
 const AudienceCreate = () => {
-  const [type, setType] = useState("audience");
+  const [type, setType] = useState("user");
   const [name, setName] = useState("");
   const [task, setTask] = useState("");
   const [showToast, setShowToast] = useState(false);

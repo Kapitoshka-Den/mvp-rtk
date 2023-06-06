@@ -15,24 +15,31 @@ import AudienceCreate from "./Pages/AudiencesCreate";
 import AudienceInfo from "./Pages/AudienceInfo";
 
 const App = () => {
-const navigator = useNavigate()
+  const navigator = useNavigate();
 
   return (
     <div className="App">
-      <nav style={{ height: "10%" }} className="d-flex flex-row">
-        <ul className="padding-inline-start">
+      <nav style={{ height: "10%",background:"#0d6efd" }} className="d-flex flex-row">
+        <ul className="padding-inline-start header">
           {window.localStorage.getItem("acces token") ? (
-            <div>
-              <NavLink className="m-1" to="/audienceList">
-                Audiences
-              </NavLink>
-              <NavLink className="m-1" to="/">
-                Login
-              </NavLink>
-              <Button onClick={()=>{
-                tokensDelete()
-                navigator("/")
-                }}>Logout</Button>
+            <div className="header">
+              <div>
+                <NavLink className="m-1" to="/audienceList">
+                  Audiences
+                </NavLink>
+                <NavLink className="m-1" to="/">
+                  Login
+                </NavLink>
+              </div>
+              <Button
+              className="logout"
+                onClick={() => {
+                  tokensDelete();
+                  navigator("/");
+                }}
+              >
+                Logout
+              </Button>
             </div>
           ) : (
             <NavLink className="m-1" to="/">
@@ -49,11 +56,11 @@ const navigator = useNavigate()
         <Route path="/" element={<Authorize />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/audienceList" element={<AudienceList />} />
-        <Route path="/createEquip" element={<CreateEquip props="test"/>} />
+        <Route path="/createEquip" element={<CreateEquip props="test" />} />
         <Route path="/Login" element={<Authorize />} />
         <Route path="/equipment/:audiencetId" element={<Equipment />} />
-        <Route path="/audienceCreate" element={<AudienceCreate/>}/>
-        <Route path="/audienceInfo/:audienceId" element = {<AudienceInfo/>}/>
+        <Route path="/audienceCreate" element={<AudienceCreate />} />
+        <Route path="/audienceInfo/:audienceId" element={<AudienceInfo />} />
       </Routes>
     </div>
   );
