@@ -82,6 +82,7 @@ const EquipmentList = () => {
               state: { equipmentId: params.audienceId },
             })
           }
+          style={{position:'fixed',right:'20px',bottom:'20px'}}
           type="button"
           className="btn btn-primary btn-lg  hide-toggle"
         >
